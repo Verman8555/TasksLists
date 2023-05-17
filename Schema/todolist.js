@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const Schemaa = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const listform = new Schema({
     name: {
         type: String,
         required: true
@@ -7,4 +9,4 @@ const Schemaa = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('list', Schemaa);
+module.exports = mongoose.model('list', listform);

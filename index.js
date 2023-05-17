@@ -6,6 +6,7 @@ const list = require('./Schema/todolist');
 
 const app = express();
 
+//app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
@@ -26,8 +27,25 @@ app.get('/', (req,res) => {
     res.send("Hello");
 })
 
-app.post('/', async (req,res) => {
-    
+app.get('/1', async (req,res) => {
+    try{
+        const entry = await list.find();
+        res.json(entry);
+    } catch(error){
+        res.status(500).json({message:error.message});
+    }
+})
+
+app.post('/2', async (req,res) => {
+    const entry = new list({
+        name: req.body.name
+    })
+    try{
+        const savedData = await entry.save();
+        res.status(200).json(savedData);
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
 })
 
 app.listen(7000, () => {
